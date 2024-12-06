@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+  <title>TXT to PDF</title>
+  <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    h1 {
+        text-align: center;
+        color: #0b80f2;
+        margin: 2rem 0 0 0;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideUp 1s ease-out forwards;
+        animation-delay: 0.5s;
+    }
+
+    .upload-container {
+        width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideUp 1s ease-out forwards;
+        animation-delay: 1s;
+    }
+
+    .upload-header {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .upload-box {
+        width: 100%;
+        height: 150px;
+        border: 2px dashed #d0d0d0;
+        border-radius: 8px;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        font-size: 14px;
+        position: relative;
+    }
+
+    .upload-box input {
+        display: none;
+    }
+
+    .upload-box label {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 0.5rem 0.75rem;
+        color: rgba(0, 0, 0, 0.6);
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+
+    .file-name {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #333;
+        display: none;
+    }
+
+    .progress-container {
+        width: 100%;
+        margin-top: 20px;
+        display: none;
+    }
+
+    .progress-bar {
+        width: 0;
+        height: 8px;
+        background-color: #0b80f2;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+    }
+
+    form {
+        height: 15rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    button {
+        border: 0.09rem solid #0b80f2;
+        color: #0b80f2;
+        background-color: white;
+        font-weight: 600;
+        padding: 0.5rem 5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all ease;
+    }
+
+    button:hover {
+        color: #fff;
+        background-color: #0b80f2;
+    }
+
+    /* Animation for sliding up effect */
+    @keyframes slideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+  </style>
+</head>
+<body>
+    <h1>Convert a txt file to a pdf file</h1>
+    <div class="upload-container">
+        <div class="upload-header">Upload files</div>
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="upload-box">
+                <p>Choose a file or drag & drop it here</p>
+                <label for="file">Browse Files</label>
+                <input id="file" type="file" name="file" accept=".txt" required>
+                <p class="file-name" id="file-name"></p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <button type="submit">Convert</button>
+        </form>
+    </div>
+
+    <script>
+      const fileInput = document.getElementById('file');
+      const fileNameDisplay = document.getElementById('file-name');
+      const progressBar = document.getElementById('progress-bar');
+      const progressContainer = document.querySelector('.progress-container');
+      const uploadForm = document.getElementById('upload-form');
+
+      fileInput.addEventListener('change', () => {
+          if (fileInput.files.length > 0) {
+              fileNameDisplay.textContent = `Selected File: ${fileInput.files[0].name}`;
+              fileNameDisplay.style.display = 'block';
+          }
+      });
+
+      uploadForm.addEventListener('submit', (e) => {
+          e.preventDefault(); 
+          const interval = setInterval(() => {
+                  clearInterval(interval);
+                  alert('Converted to PDF Successfully!');
+                  uploadForm.submit();
+          }, 50);
+      });
+    </script>
+</body>
+</html>
